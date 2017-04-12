@@ -25,11 +25,18 @@ public interface UserService {
 	public ResponseMsg findBackPassword(String userName,String email);
 	/**
 	 * 这个方法主要实现的是用户的注册功能
-	 * @param userName 
-	 * @param password
-	 * @param email
-	 * @param name
-	 * @return
+	 * @param userName	用户将要注册的账号
+	 * @param password	密码
+	 * @param email		用户的邮箱
+	 * @param name		用户的昵称
+	 * @return			这个方法的执行结果
 	 */
 	public ResponseMsg register(String userName,String password,String email,String name,String userId);
+	
+	/**
+	 * 这个方法主要实现的是判断这个账号是否已经被注册
+	 * @param userName	用户将要注册的账号
+	 * @return			这个方法的执行结果
+	 */
+	public ResponseMsg isRegister(String userName);
 }
