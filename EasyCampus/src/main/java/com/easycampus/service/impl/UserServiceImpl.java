@@ -3,7 +3,6 @@ package com.easycampus.service.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.mail.Authenticator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -4,26 +4,48 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name="users",catalog="easy_campus")
 public class User {
-
+	
+	@NotEmpty(message="用户名不能为空")
+	@Length(min=8,max=20,message="长度在8-20个字符之内")
 	@Column(name="user_name")
 	private String userName;
+	
+	@NotEmpty(message="密码不能为空")
+	@Length(min=8,max=20,message="长度在8-20个字符之内")
 	@Column(name="password")
 	private String password;
+	
+	@NotEmpty(message="昵称不能为空")
+	@Length(min=8,max=20,message="长度在8-20个字符之内")
 	@Column(name="name")
 	private String name;
+	
+	@Email(message="邮箱的格式不正确")
 	@Column(name="email")
 	private String email;
+	
+	@Length(max=50,message="个性签名最多不能超过50个字符")
 	@Column(name="brirf_introduction")
 	private String briefIntroduction;
+	
+	@NotEmpty(message="学号不能为空")
+	@Length(min=8,max=8,message="学号长度必须为8为数字")
 	@Column(name="user_id")
 	private String userId;
+	
 	@Column(name="user_type")
 	private int userType;
+	
 	@Column(name="activity_status")
 	private int activityStatus;
+	
 	@Column(name="image_path")
 	private String imagepPath;
 	

@@ -3,8 +3,8 @@ package com.easycampus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easycampus.service.UserService;
@@ -17,7 +17,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="login")
+	@RequestMapping(value="login",method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseMsg login(String userName,String password){
 		ResponseMsg msg = new ResponseMsg();
@@ -34,7 +34,7 @@ public class UserController {
 		return userService.login(userName, password);
 	}
 	
-	@RequestMapping("register")
+	@RequestMapping(value="register",method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseMsg register(String userName,String password,String email,String briefIntroduction,String name,String userId){
 		ResponseMsg msg = new ResponseMsg();
@@ -53,13 +53,13 @@ public class UserController {
 		return userService.register(userName, password, email, name, userId);
 	}
 	
-	@RequestMapping("isRegister")
+	@RequestMapping(value="isRegister",method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseMsg isRegister(String userName){
 		return userService.isRegister(userName);
 	}
 	
-	@RequestMapping("findBackPassword")
+	@RequestMapping(value="findBackPassword",method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseMsg findBackPassword(String userName,String email){
 		return userService.findBackPassword(userName, email); 
