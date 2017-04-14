@@ -8,7 +8,7 @@ public class TestMail {
 	public static void main(String[] a){
 		EmailUtil emailUtil = new EmailUtil();
 		try {
-			emailUtil.sendToOne("test", "你好", "157717550096@163.com");
+			emailUtil.sendToOne("test", "你好", "15771755096@163.com");
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

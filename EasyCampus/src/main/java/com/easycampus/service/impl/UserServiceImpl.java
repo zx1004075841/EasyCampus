@@ -1,8 +1,12 @@
 package com.easycampus.service.impl;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.easycampus.model.User;
 import com.easycampus.service.UserService;
+import com.easycampus.utils.EmailUtil;
 import com.easycampus.utils.ResponseMsg;
 
 @Service
@@ -19,9 +24,11 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	private ResponseMsg msg;
+	private EmailUtil mail;
 	@Override
 	public ResponseMsg login(String userName, String password) {
 		// TODO Auto-generated method stub
+		Properties properties = new Properties();
 		msg = new ResponseMsg();
 		String sql = "select * from users where user_name=? AND password=?";
 		User user = null; 
@@ -51,6 +58,21 @@ public class UserServiceImpl implements UserService {
 		msg.setCode(1);
 		msg.setMsg("登陆成功");
 		msg.setData(user);
+		try {
+			properties.load(this.getClass().getResourceAsStream("/findPasswordMail.properties"));
+			String content = properties.getProperty("content");
+			content.replace("userId", user.getUserId());
+			mail.sendToOne("重置密码", "点击此处重置密码", user.getEmail());
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return msg;
 	}
 

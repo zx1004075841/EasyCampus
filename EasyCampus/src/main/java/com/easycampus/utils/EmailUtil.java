@@ -8,9 +8,12 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.URLName;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import com.sun.mail.smtp.SMTPSSLTransport;
 
 /**
  * 这个类主要是完成Email发送的功能
@@ -54,10 +57,13 @@ public class EmailUtil {
 		message.setSubject(title);
 		message.setSentDate(new Date(System.currentTimeMillis()));
 		message.setText(content);
-		Transport transport = session.getTransport();
-		transport.connect(props.getProperty("server"), props.getProperty("from"), props.getProperty("password"));
+		SMTPSSLTransport transport = new SMTPSSLTransport(session,new URLName(props.getProperty("mail.transport.protocol"),
+				props.getProperty("mail.host"),new Integer(props.getProperty("mail.port")),"",
+				props.getProperty("mail.from"),props.getProperty("mail.password")));
+		transport.connect();
 		transport.sendMessage(message, new Address[]{new InternetAddress(address)});
 		transport.close();
+		
 	}
 	
 	/**
@@ -69,12 +75,12 @@ public class EmailUtil {
 	 * @throws MessagingException	message异常
 	 */
 	public void sendToAll(String title,String content,String ...address) throws AddressException, MessagingException{
-		message.setFrom(new InternetAddress(props.getProperty("from")));
+		message.setFrom(new InternetAddress(props.getProperty("mail.from")));
 		message.setSentDate(new Date(System.currentTimeMillis()));
 		message.setSubject(title);
 		message.setText(content);
 		Transport transport = session.getTransport();
-		transport.connect(props.getProperty("server"), props.getProperty("from"), props.getProperty("password"));
+		transport.connect(props.getProperty("mail.host"), props.getProperty("mail.from"), props.getProperty("mail.password"));
 		InternetAddress[] addresses = new InternetAddress[address.length];
 		for(int i = 0; i < address.length; i++){
 			addresses[i].setAddress(address[i]);
