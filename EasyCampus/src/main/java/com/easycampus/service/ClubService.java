@@ -83,7 +83,7 @@ public interface ClubService {
 	 * @param authority		修改的权限
 	 * @return
 	 */
-	public ResponseMsg authorityControl(String adminId,String clubId,String userId,String authority);
+	public ResponseMsg authorityControl(String adminId,String clubId,String userId,int authority);
 	
 	/**
 	 * 这个方法定义了查看当前用户权限下所有的用户的角色权限

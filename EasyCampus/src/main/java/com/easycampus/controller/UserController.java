@@ -22,7 +22,7 @@ public class UserController {
 	public ResponseMsg login(String userName,String password){
 		ResponseMsg msg = new ResponseMsg();
 		if(userName == null || password == null){
-			msg.setCode(0);
+			msg.setCode(0); 
 			msg.setMsg("用户名或密码不能为null");
 			return msg;
 		}
