@@ -7,23 +7,23 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name="skill")
+@Table(name="skills")
 public class Skill {
 
 	@Column(name="skill_name")
-	@NotEmpty
+	@NotEmpty(message="skill_name is not empty")
 	private String skillName;
 	@Column(name="skill_info")
-	@NotEmpty
+	@NotEmpty(message="skill_info is not empty")
 	private String skillInfo;
 	@Column(name="skill_id")
-	@NotEmpty
+	@NotEmpty(message="skill_id is not empty")
 	private String skillId;
 	@Column(name="skill_type")
-	@NotEmpty
+	@NotEmpty(message="skill_type is not empty")
 	private String skillType;
 	@Column(name="user_id")
-	@NotEmpty
+	@NotEmpty(message="user_id is not empty")
 	private String userId;
 	
 	public String getSkillName() {

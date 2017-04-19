@@ -1,6 +1,10 @@
 package com.easycampus.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="club_user")
 public class Club_User {
 
 	private String name;

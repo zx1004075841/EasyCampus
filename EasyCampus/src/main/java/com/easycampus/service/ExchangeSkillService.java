@@ -40,7 +40,7 @@ public interface ExchangeSkillService {
 	 * @param skillId  It is this id of skill that you want to content
 	 * @return
 	 */
-	public ResponseMsg discussSkill(String skillId);
+	public ResponseMsg discussSkill(String skillId,String context,String userId);
 	
 	/**
 	 * if you want to focus on a your favorite skill 
@@ -56,7 +56,7 @@ public interface ExchangeSkillService {
 	 * @param SkillType		skill type
 	 * @return
 	 */
-	public ResponseMsg addSkillType(String userId,String SkillType);
+	public ResponseMsg addSkillType(String userId,String skillType);
 	
 	/**
 	 * if you want to remove a assign-skill type,you would like to select this method 
@@ -64,5 +64,5 @@ public interface ExchangeSkillService {
 	 * @param SkillType			skill-type identify
 	 * @return
 	 */
-	public ResponseMsg removeSkillType(String userId,String SkillType);
+	public ResponseMsg removeSkillType(String userId,String skillType);
 }

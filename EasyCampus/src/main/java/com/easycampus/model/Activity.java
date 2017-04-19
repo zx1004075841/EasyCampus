@@ -1,6 +1,8 @@
 package com.easycampus.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -9,16 +11,36 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name="activities")
 public class Activity {
 
-	@NotEmpty
+	@NotEmpty(message="activity name is not empty")
+	@Column(name="activity_name")
 	private String activityName;
-	@NotEmpty
+	
+	@NotEmpty(message="activity content is not empty")
+	@Column(name="activity_address")
 	private String activityAddress;
-	@NotEmpty
+	
+	@NotEmpty(message="activity_content is not empty")
+	@Column(name="activity_content")
 	private String activityContent;
-	@NotEmpty
+	
+	@NotEmpty(message="activity_start_time")
+	@Column(name="activity_start_time")
 	private long activityStartTime;
-	@NotEmpty
+	
+	@NotEmpty(message="activity end time is not empty")
+	@Column(name="activity_end_time")
 	private long activityEndTime;
+	
+	@NotEmpty(message="club id is not empty")
+	@Column(name="club_id")
+	private String clubId;
+	
+	public String getClubId() {
+		return clubId;
+	}
+	public void setClubId(String clubId) {
+		this.clubId = clubId;
+	}
 	
 	public String getActivityName() {
 		return activityName;

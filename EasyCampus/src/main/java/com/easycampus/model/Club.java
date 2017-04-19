@@ -1,5 +1,6 @@
 package com.easycampus.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -8,13 +9,16 @@ import javax.validation.constraints.NotNull;
 @Table(name="clubs")
 public class Club {
 	
-	@NotNull
+	@NotNull(message="club name is not null")
+	@Column(name="club_name")
 	private String clubName;
 	
-	@NotNull
+	@NotNull(message="club id is not null")
+	@Column(name="club_id")
 	private String clubId;
 	
-	@NotNull
+	@NotNull(message="club info is not null")
+	@Column(name="club_info")
 	private String clubInfo;
 	
 	public String getClubName() {
