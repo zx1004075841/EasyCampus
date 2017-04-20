@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResponseMsg login(String userName, String password) {
 		// TODO Auto-generated method stub
-		Properties properties = new Properties();
 		msg = new ResponseMsg();
 		String sql = "select * from users where user_name=? AND password=?";
 		User user = null; 
@@ -58,21 +57,6 @@ public class UserServiceImpl implements UserService {
 		msg.setCode(1);
 		msg.setMsg("登陆成功");
 		msg.setData(user);
-		try {
-			properties.load(this.getClass().getResourceAsStream("/findPasswordMail.properties"));
-			String content = properties.getProperty("content");
-			content.replace("userId", user.getUserId());
-			mail.sendToOne("重置密码", "点击此处重置密码", user.getEmail());
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return msg;
 	}
 

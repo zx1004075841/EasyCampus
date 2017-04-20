@@ -64,31 +64,4 @@ public interface ClubService {
 	 * @return				返回包含所有正在进行的活动的结果
 	 */
 	public ResponseMsg myActivities(String userId);
-	
-	/**
-	 * 这个方法定义了用户角色分配的方法
-	 * @param adminId		角色分配人的唯一标示
-	 * @param userId		将要被分配角色的用户的唯一标示
-	 * @param clubId		社团的唯一标示
-	 * @param userRole		将要分配用户的角色
-	 * @return				返回包含所有正在进行的活动的结果
-	 */
-	public ResponseMsg roleControl(String adminId,String userId,String clubId,String userRole);
-	
-	/**
-	 * 这个方法定了用户的权限控制
-	 * @param adminId		管理员的id
-	 * @param clubId		社团的id
-	 * @param userId		用户的id
-	 * @param authority		修改的权限
-	 * @return
-	 */
-	public ResponseMsg authorityControl(String adminId,String clubId,String userId,int authority);
-	
-	/**
-	 * 这个方法定义了查看当前用户权限下所有的用户的角色权限
-	 * @param userId	当前用户的id
-	 * @return			返回包含当前用户权限下所有的用户的角色权限的结果
-	 */
-	public ResponseMsg showUserByAuthority(String userId);
 }

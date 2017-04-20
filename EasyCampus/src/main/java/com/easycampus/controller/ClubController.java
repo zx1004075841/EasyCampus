@@ -83,34 +83,4 @@ public class ClubController {
 			return message;
 		return clubService.myActivities(userId);
 	}
-	
-	@RequestMapping(value="roleControl",method=RequestMethod.POST)
-	@ResponseBody
-	public ResponseMsg roleControl(String adminId, String userId, String clubId, String userRole){
-		InputValidation validate = new InputValidation();
-		ResponseMsg message = validate.validate(adminId,userId,clubId,userRole);
-		if(message.getCode() == 0)
-			return message;
-		return clubService.roleControl(adminId, userId, clubId, userRole);
-	}
-	
-	@RequestMapping(value="authorityControl",method=RequestMethod.POST)
-	@ResponseBody
-	public ResponseMsg authorityControl(String adminId, String clubId, String userId, String authority){
-		InputValidation validate = new InputValidation();
-		ResponseMsg message = validate.validate(adminId,userId,clubId,authority);
-		if(message.getCode() == 0)
-			return message;
-		return clubService.authorityControl(adminId, clubId, userId, new Integer(authority));
-	}
-	
-	@RequestMapping(value="showUserByAuthority")
-	@ResponseBody
-	public ResponseMsg showUserByAuthority(String userId){
-		InputValidation validate = new InputValidation();
-		ResponseMsg message = validate.validate(userId);
-		if(message.getCode() == 0)
-			return message;
-		return clubService.showUserByAuthority(userId);
-	}
 }

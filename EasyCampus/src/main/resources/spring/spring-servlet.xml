@@ -12,9 +12,9 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 	<bean id="viewResolver"
         class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-	    <property name="prefix" value="/WEB-INF/jsps/"/>
-	    <property name="suffix" value=".jsp"/>
+	    <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+	    <property name="prefix" value="/WEB-INF/html/"/>
+	    <property name="suffix" value=".html"/>
 	</bean>	
 	<mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
@@ -34,8 +34,8 @@
     	<property name="defaultEncoding" value="utf-8"></property>
 	</bean>
 	<context:component-scan base-package="com.easycampus.controller"></context:component-scan>
-	<mvc:resources location="/WEB-INF/css" mapping="/css/"></mvc:resources>
-	<mvc:resources location="/WEB-INF/js" mapping="/js/"></mvc:resources>
-	<mvc:resources location="/WEB-INF/images/" mapping="/images/"></mvc:resources>
+	<mvc:resources location="/assets/css" mapping="/css/"></mvc:resources>
+	<mvc:resources location="/assets/js" mapping="/js/"></mvc:resources>
+	<mvc:resources location="/assets/images/" mapping="/images/"></mvc:resources>
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>    
 </beans>

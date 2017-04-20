@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.easycampus.model.Club;
 import com.easycampus.service.AdminConsoleService;
@@ -50,8 +51,53 @@ public class AdminConsoleController {
 		InputValidation inputValidation = new InputValidation();
 		ResponseMsg message = inputValidation.validate(userId,clubId);
 		if(0 == message.getCode()){
-			
+			return message;
 		}
-		return null;
+		
+		return this.removeClub(userId, clubId);
+	}
+	
+	@RequestMapping(value="showClub",method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseMsg showClub(){
+		return this.showClub();
+	}
+	
+	public ResponseMsg editClub(String userId,@Valid @ModelAttribute("club") Club club,BindingResult bindingResult){
+		InputValidation inputValidation = new InputValidation();
+		ResponseMsg message = inputValidation.validate(userId);
+		if(0 == message.getCode()){
+			return message;
+		}
+		List<ObjectError> list = bindingResult.getAllErrors();
+		if(list.isEmpty())
+			return this.adminConsoleService.editClub(userId, club);
+		String errors = "";
+		for(int i = 0; i < list.size(); i++){
+			errors += list.get(i);
+		}
+		message.setCode(0);
+		message.setMsg(errors);
+		return message;
+	}
+	
+	@RequestMapping(value="login.do",method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView login(String userName,String password){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("main");
+		/*ResponseMsg msg = new ResponseMsg();
+		if(userName == null || password == null){
+			msg.setCode(0); 
+			msg.setMsg("用户名或密码不能为null");
+			return msg;
+		}
+		if(userName.trim().equals("") || password.trim().equals("")){				
+			msg.setCode(0);
+			msg.setMsg("用户名或密码不能为空");
+			return msg;
+		}
+		return adminConsoleService.login(userName, password);*/
+		return modelAndView;
 	}
 }
