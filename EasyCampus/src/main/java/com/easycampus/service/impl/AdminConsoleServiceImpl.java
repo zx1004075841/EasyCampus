@@ -277,12 +277,38 @@ public class AdminConsoleServiceImpl implements AdminConsoleService {
 	@Override
 	public ResponseMsg editClubUserAuthority(String adminId, String userId, String authority) {
 		// TODO Auto-generated method stub
-		return null;
+		ResponseMsg message = new ResponseMsg();
+		String sql = "select user_type from users where user_id=?";
+		int user_type = jdbcTemplate.queryForObject(sql, new Object[]{adminId},int.class);
+		if(0 == user_type){
+			message.setCode(0);
+			message.setMsg("user has not authority to add skill type");
+			return message;
+		}
+		sql = "update club set club_authority=? from club where user_id=?";
+		int result = jdbcTemplate.update(sql,authority,userId);
+		if(0 == result){
+			message.setCode(0);
+			message.setMsg("can not edit authority");
+			return message;
+		}
+		message.setCode(0);
+		message.setMsg("success");
+		return message;
 	}
 
 	@Override
 	public ResponseMsg addClubUserRole(String clubUserId, String userId, String Role) {
 		// TODO Auto-generated method stub
+		ResponseMsg message = new ResponseMsg();
+		String sql = "select user_type from users where user_id=?";
+		int user_type = jdbcTemplate.queryForObject(sql, new Object[]{},int.class);
+		if(0 == user_type){
+			message.setCode(0);
+			message.setMsg("user has not authority to add skill type");
+			return message;
+		}
+		
 		return null;
 	}
 

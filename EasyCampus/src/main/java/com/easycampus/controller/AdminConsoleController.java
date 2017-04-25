@@ -81,23 +81,21 @@ public class AdminConsoleController {
 		return message;
 	}
 	
-	@RequestMapping(value="login.do",method=RequestMethod.POST)
+	@RequestMapping(value="login.do")
 	@ResponseBody
 	public ModelAndView login(String userName,String password){
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("main");
-		/*ResponseMsg msg = new ResponseMsg();
-		if(userName == null || password == null){
-			msg.setCode(0); 
-			msg.setMsg("用户名或密码不能为null");
-			return msg;
+		InputValidation inputValidation = new InputValidation();
+		ResponseMsg msg = new ResponseMsg();
+		msg = inputValidation.validate(userName,password);
+		if(0 == msg.getCode()){
+			modelAndView.addObject("msg", msg);
+			modelAndView.setViewName("/index");
+			return modelAndView;
 		}
-		if(userName.trim().equals("") || password.trim().equals("")){				
-			msg.setCode(0);
-			msg.setMsg("用户名或密码不能为空");
-			return msg;
-		}
-		return adminConsoleService.login(userName, password);*/
+		msg = adminConsoleService.login(userName, password);
+		modelAndView.addObject("msg", msg);
+		modelAndView.setViewName("redirect:/home");
 		return modelAndView;
 	}
 }

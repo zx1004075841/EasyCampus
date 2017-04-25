@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+.body{
+	width:0 auto;
+}
+.container{position:relative;}
+.row{positon:absolute;top:50%;transform:translate(0,110%);border:1px solid #000;border-radius:10px;}
+.form-horizontal{margin-top:50px}
