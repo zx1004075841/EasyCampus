@@ -326,15 +326,13 @@ public class AdminConsoleServiceImpl implements AdminConsoleService {
 
 	@Override
 	public ResponseMsg login(String userName, String password) {
-		// TODO Auto-generated method stub
 		ResponseMsg msg = new ResponseMsg();
-		String sql = "select * from users where user_name=? AND password=?";
+		String sql = "select * from users where user_name=? and password=?";
 		User user = null; 
 		try{
 			user = jdbcTemplate.queryForObject(sql, new Object[]{userName,password},new RowMapper<User>(){
-	
 				@Override
-				public User mapRow(ResultSet rs, int arg1) throws SQLException {
+				public User mapRow(ResultSet rs, int i) throws SQLException {
 					// TODO Auto-generated method stub
 					User user = new User();
 					if(rs.next()){
@@ -352,6 +350,7 @@ public class AdminConsoleServiceImpl implements AdminConsoleService {
 			msg.setCode(0);
 			return msg;
 		}
+		System.out.println(user.getUserType());
 		if(0 == user.getUserType()){
 			msg.setCode(0);
 			msg.setMsg("用户没有权限");

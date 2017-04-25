@@ -18,6 +18,7 @@ public class InputValidation {
 			if(null == object)
 				flag = true;
 		}
+		
 		if(flag){
 			message.setCode(0);
 			message.setMsg("输入不能为null");

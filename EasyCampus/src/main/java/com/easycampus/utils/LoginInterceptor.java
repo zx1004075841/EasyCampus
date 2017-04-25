@@ -29,7 +29,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if(null == session.getAttribute("user")){
 			return true;
 		}	
-		System.out.println("adsadasdasadas");
 		response.sendRedirect("/index.html");
 		return false;
 	}

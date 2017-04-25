@@ -63,6 +63,7 @@ public class AdminConsoleController {
 		return this.showClub();
 	}
 	
+	@RequestMapping(value="editClub",method=RequestMethod.POST)
 	public ResponseMsg editClub(String userId,@Valid @ModelAttribute("club") Club club,BindingResult bindingResult){
 		InputValidation inputValidation = new InputValidation();
 		ResponseMsg message = inputValidation.validate(userId);
@@ -81,7 +82,7 @@ public class AdminConsoleController {
 		return message;
 	}
 	
-	@RequestMapping(value="login.do")
+	@RequestMapping(value="login.do",method=RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView login(String userName,String password){
 		ModelAndView modelAndView = new ModelAndView();
@@ -90,12 +91,20 @@ public class AdminConsoleController {
 		msg = inputValidation.validate(userName,password);
 		if(0 == msg.getCode()){
 			modelAndView.addObject("msg", msg);
-			modelAndView.setViewName("/index");
+			modelAndView.setViewName("redirect:/index.html");
 			return modelAndView;
 		}
 		msg = adminConsoleService.login(userName, password);
+		System.out.println(msg.getCode());
+		if(0 == msg.getCode()){
+			msg.setMsg("userName or password is not worth");
+			modelAndView.setViewName("redirect:/index.html");
+			modelAndView.addObject("msg",msg);
+			return modelAndView;
+		}
 		modelAndView.addObject("msg", msg);
-		modelAndView.setViewName("redirect:/home");
+		modelAndView.setViewName("home");
 		return modelAndView;
 	}
+	
 }
