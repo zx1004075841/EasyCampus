@@ -13,7 +13,7 @@
 	<bean id="viewResolver"
         class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 	    <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
-	    <property name="prefix" value="/html/"/>
+	    <property name="prefix" value="WEB-INF/html/"/>
 	    <property name="suffix" value=".html"/>
 	</bean>	
 	<mvc:annotation-driven>
@@ -36,7 +36,7 @@
 	<context:component-scan base-package="com.easycampus.controller"></context:component-scan>
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/WEB-INF/html/**"/>
 			<bean id="loginInterceptor" class="com.easycampus.utils.LoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

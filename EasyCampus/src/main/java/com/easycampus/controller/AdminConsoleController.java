@@ -12,15 +12,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.easycampus.model.Club;
+import com.easycampus.model.User;
 import com.easycampus.service.AdminConsoleService;
 import com.easycampus.utils.InputValidation;
 import com.easycampus.utils.ResponseMsg;
 
 @Controller
 @RequestMapping("admin")
+@SessionAttributes("user")
 public class AdminConsoleController {
 
 	@Autowired
@@ -47,14 +50,14 @@ public class AdminConsoleController {
 	
 	@RequestMapping(value="removeClub",method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseMsg removeClub(String userId,String clubId){
+	public ResponseMsg removeClub(String userId,String clubId,User user){
 		InputValidation inputValidation = new InputValidation();
 		ResponseMsg message = inputValidation.validate(userId,clubId);
 		if(0 == message.getCode()){
 			return message;
 		}
 		
-		return this.removeClub(userId, clubId);
+		return this.removeClub(userId, clubId,user);
 	}
 	
 	@RequestMapping(value="showClub",method=RequestMethod.POST)
@@ -84,7 +87,7 @@ public class AdminConsoleController {
 	
 	@RequestMapping(value="login.do",method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView login(String userName,String password){
+	public ModelAndView login(String userName,String password, User user){
 		ModelAndView modelAndView = new ModelAndView();
 		InputValidation inputValidation = new InputValidation();
 		ResponseMsg msg = new ResponseMsg();
@@ -95,7 +98,6 @@ public class AdminConsoleController {
 			return modelAndView;
 		}
 		msg = adminConsoleService.login(userName, password);
-		System.out.println(msg.getCode());
 		if(0 == msg.getCode()){
 			msg.setMsg("userName or password is not worth");
 			modelAndView.setViewName("redirect:/index.html");
@@ -103,7 +105,8 @@ public class AdminConsoleController {
 			return modelAndView;
 		}
 		modelAndView.addObject("msg", msg);
-		modelAndView.setViewName("home");
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("redirect:/WEB-INF/html/home.html");
 		return modelAndView;
 	}
 	

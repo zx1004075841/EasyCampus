@@ -328,39 +328,28 @@ public class AdminConsoleServiceImpl implements AdminConsoleService {
 	public ResponseMsg login(String userName, String password) {
 		ResponseMsg msg = new ResponseMsg();
 		String sql = "select * from users where user_name=? and password=?";
-		User user = null; 
-		try{
-			user = jdbcTemplate.queryForObject(sql, new Object[]{userName,password},new RowMapper<User>(){
-				@Override
-				public User mapRow(ResultSet rs, int i) throws SQLException {
-					// TODO Auto-generated method stub
-					User user = new User();
-					if(rs.next()){
-						user.setActivityStatus(rs.getInt("activity_status"));
-						user.setBriefIntroduction(rs.getString("brief_introduction"));
-						user.setEmail(rs.getString("email"));
-						user.setName(rs.getString("name"));
-						user.setUserName(rs.getString("user_name"));
-						user.setUserType(rs.getInt("user_type"));
-					}
-					return user;
-				}});
-		}catch(Exception e){
-			msg.setMsg("用户名或密码不正确");
-			msg.setCode(0);
-			return msg;
-		}
+		RowMapper<User> bean= BeanPropertyRowMapper.newInstance(User.class);
+		List<User> users = this.jdbcTemplate.query(sql, new Object[]{userName,password}, bean);
+		User user = null;
+		if(users.size() > 0){
+			user = users.get(0);
 		System.out.println(user.getUserType());
-		if(0 == user.getUserType()){
+			if(0 == user.getUserType()){
+				msg.setCode(0);
+				msg.setMsg("用户没有权限");
+				msg.setData(user);
+				return msg;
+			}
+			msg.setCode(1);
+			msg.setMsg("登陆成功");
+			msg.setData(user);
+			return msg;
+		}else{
 			msg.setCode(0);
-			msg.setMsg("用户没有权限");
+			msg.setMsg("用户名或密码错误");
 			msg.setData(user);
 			return msg;
 		}
-		msg.setCode(1);
-		msg.setMsg("登陆成功");
-		msg.setData(user);
-		return msg;
 	}
 
 }
