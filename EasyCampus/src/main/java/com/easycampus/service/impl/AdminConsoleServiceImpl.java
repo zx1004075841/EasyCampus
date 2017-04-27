@@ -327,13 +327,13 @@ public class AdminConsoleServiceImpl implements AdminConsoleService {
 	@Override
 	public ResponseMsg login(String userName, String password) {
 		ResponseMsg msg = new ResponseMsg();
+		System.out.println(userName + password);
 		String sql = "select * from users where user_name=? and password=?";
 		RowMapper<User> bean= BeanPropertyRowMapper.newInstance(User.class);
 		List<User> users = this.jdbcTemplate.query(sql, new Object[]{userName,password}, bean);
 		User user = null;
 		if(users.size() > 0){
 			user = users.get(0);
-		System.out.println(user.getUserType());
 			if(0 == user.getUserType()){
 				msg.setCode(0);
 				msg.setMsg("用户没有权限");

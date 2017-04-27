@@ -23,7 +23,6 @@ import com.easycampus.utils.ResponseMsg;
 
 @Controller
 @RequestMapping("admin")
-@SessionAttributes("user")
 public class AdminConsoleController {
 
 	@Autowired
@@ -85,29 +84,16 @@ public class AdminConsoleController {
 		return message;
 	}
 	
-	@RequestMapping(value="login.do",method=RequestMethod.POST)
+	@RequestMapping(value="login",method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView login(String userName,String password, User user){
-		ModelAndView modelAndView = new ModelAndView();
+	public ResponseMsg login(String userName,String password){
 		InputValidation inputValidation = new InputValidation();
-		ResponseMsg msg = new ResponseMsg();
-		msg = inputValidation.validate(userName,password);
+		ResponseMsg msg = inputValidation.validate(userName,password);
 		if(0 == msg.getCode()){
-			modelAndView.addObject("msg", msg);
-			modelAndView.setViewName("redirect:/index.html");
-			return modelAndView;
+			msg.setMsg("用户名和密码不能为空");
+			return msg;
 		}
-		msg = adminConsoleService.login(userName, password);
-		if(0 == msg.getCode()){
-			msg.setMsg("userName or password is not worth");
-			modelAndView.setViewName("redirect:/index.html");
-			modelAndView.addObject("msg",msg);
-			return modelAndView;
-		}
-		modelAndView.addObject("msg", msg);
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("redirect:/WEB-INF/html/home.html");
-		return modelAndView;
+		return this.adminConsoleService.login(userName, password);
 	}
 	
 }
